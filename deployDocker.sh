@@ -1,4 +1,4 @@
-export PROJECT_NAME itis_discord_bot
+export PROJECT_NAME=itis_discord_bot
 
 echo "Building itis_discord_bot..."
 docker buildx build --platform linux/arm64 --tag $PROJECT_NAME --load .

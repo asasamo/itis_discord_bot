@@ -5,5 +5,6 @@
         "status": "v1/auth/status"
     },
     "status": "v1/auth/status",
-    "noticeboard": "v1/students/{{studentId}}/noticeboard"
+    "noticeboard": "v1/students/{{studentId}}/noticeboard",
+    "agenda": "v1/students/{{studentId}}/agenda/all/{{begin}}/{{end}}"
 }

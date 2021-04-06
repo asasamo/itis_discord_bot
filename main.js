@@ -44,11 +44,15 @@ fs.readdir("./commands/", (err, files) => {
         let pull = require(`./commands/${f}`)
         console.log(`	- Searching ${f} \x1b[36m [Pending] \x1b[0m`)
         if (pull.config) {
-            client.commands.set(pull.config.name, pull)
-            pull.config.aliases.forEach(alias => {
-                client.aliases.set(alias, pull.config.name)
-            })
-            console.log(`	- Fetched command ${pull.config.name} from ${f} \x1b[32m [Resolved]\x1b[0m\n`)
+            if (pull.config.enabled) {
+                client.commands.set(pull.config.name, pull)
+                pull.config.aliases.forEach(alias => {
+                    client.aliases.set(alias, pull.config.name)
+                })
+                console.log(`	- Fetched command ${pull.config.name} from ${f} \x1b[32m [Resolved]\x1b[0m\n`)
+            } else {
+                console.log(`	- Command ${f} disabled \x1b[31m[Rejected]\x1b[0m\n`)
+            }
         } else {
             console.log(`	- Does ${f} have no command? \x1b[31m[Rejected]\x1b[0m\n`)
         }

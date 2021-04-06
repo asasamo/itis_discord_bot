@@ -11,7 +11,7 @@ axios.defaults.baseURL = endpoints.base_url
 axios.defaults.headers['User-Agent'] = 'zorro/1.0'
 axios.defaults.headers['Z-Dev-Apikey'] = '+zorro+'
 axios.interceptors.request.use(
-    config => {
+    (config) => {
         db.get('token')
             .then((token) => {
                 if (token) {
@@ -20,7 +20,7 @@ axios.interceptors.request.use(
             })
         return config
     },
-    error => {
+    (error) => {
         Promise.reject(error)
     })
 
@@ -52,10 +52,18 @@ axios.interceptors.response.use(
 )
 
 module.exports.getNoticeboard = async (number = 5) => {
-    response = await axios.get(endpoints.noticeboard.replace('{{studentId}}', secrets.uid.slice(1, 8)))
+    var response = await axios.get(endpoints.noticeboard.replace('{{studentId}}', secrets.uid.slice(1, 8)))
     var items = response.data.items
     var lastDocuments = _.reverse(_.sortBy(items, (value) => { return new Date(value.pubDT) }))
         .filter((value) => { return value.cntCategory.includes('Circolare') || value.cntCategory.includes('Documenti - Segreteria Digitale') }).slice(0, number)
     return lastDocuments
+
+}
+
+module.exports.getAgenda = async (date) => {
+    var response = await axios.get(endpoints.agenda.replace('{{studentId}}', secrets.uid.slice(1, 8)).replace('{{begin}}', moment().format('YYYYMMDD')).replace('{{end}}', moment(date).format('YYYYMMDD')))
+
+    var agenda = _.filter(response.data.agenda, function (o) { return o.authorName != 'Didattica a distanza' })
+    return agenda
 
 }

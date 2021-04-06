@@ -28,5 +28,6 @@ module.exports.run = async (client, message, args) => {
 
 module.exports.config = {
     name: 'elimina',
-    aliases: ['delete', 'cancella', 'clear']
+    aliases: ['delete', 'cancella', 'clear'],
+    enabled: false
 }
