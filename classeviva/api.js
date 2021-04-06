@@ -61,7 +61,7 @@ module.exports.getNoticeboard = async (number = 5) => {
 }
 
 module.exports.getAgenda = async (date) => {
-    var response = await axios.get(endpoints.agenda.replace('{{studentId}}', secrets.uid.slice(1, 8)).replace('{{begin}}', moment().format('YYYYMMDD')).replace('{{end}}', moment(date).format('YYYYMMDD')))
+    var response = await axios.get(endpoints.agenda.replace('{{studentId}}', secrets.uid.slice(1, 8)).replace('{{begin}}', moment().format('YYYYMMDD')).replace('{{end}}', moment(date).add(1, 'day').format('YYYYMMDD')))
 
     var agenda = _.filter(response.data.agenda, function (o) { return o.authorName != 'Didattica a distanza' })
     return agenda
