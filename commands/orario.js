@@ -3,10 +3,10 @@ const fetch = require('node-fetch')
 const _ = require('lodash')
 const config = require('./../database/config.json')
 const db = require('./../dbHandler')
-const { genericImage } = require('./../templates/image')
 
-// http://fermibassano.edu.it/OrarioAlunni/classi/edc0000002p00001s3fffffffffffffff_1_aele_ac.png
-// https://fermibassano.edu.it/OrarioAlunni/classi/edc0000006p00001s3fffffffffffffff_1_einf_ac.png
+
+// https://cspace.spaggiari.eu//pub/VIIT0010/Documenti/Documenti%20pubblici/Orario/Studenti/classi/edc0000012p00001s3fffffffffffffff_2_einf_ac.png
+// https://cspace.spaggiari.eu//pub/VIIT0010/Documenti/Documenti%20pubblici/Orario/Studenti/classi/edc0000038p00001s3fffffffffffffff_1_mmec_ac.png
 
 const classi = {
 
@@ -91,14 +91,12 @@ const classi = {
     }
 }
 
-const base_url = 'https://fermibassano.edu.it/OrarioAlunni/classi/edc{{p}}p00001s3fffffffffffffff_{{classe}}_ac.png'
+const base_url = 'https://cspace.spaggiari.eu//pub/VIIT0010/Documenti/Documenti%20pubblici/Orario/Studenti/classi/edc{{p}}p00001s3fffffffffffffff_{{classe}}_ac.png'
 
 module.exports.run = async (client, message, args) => {
     if (args[0]) var classe = args[0].toLowerCase()
     else return message.reply(' non è stata specificata alcuna classe.')
     if (_.has(classi, classe)) {
-        // Non funziona
-        // wtf? no User-Agent che contiene disco, quindi niente auto-embed rip
         message.channel.send(base_url.replace('{{p}}', classi[classe].p).replace('{{classe}}', classi[classe].class))
     } else {
         message.reply('la classe specificata non è disponibile.')

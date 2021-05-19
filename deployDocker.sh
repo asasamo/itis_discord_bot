@@ -1,6 +1,6 @@
 export PROJECT_NAME=itis_discord_bot
 
-echo "Building itis_discord_bot..."
+echo "Building $PROJECT_NAME .."
 docker buildx build --platform linux/arm64 --tag $PROJECT_NAME --load .
 
 echo "Updating image..."
